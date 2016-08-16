@@ -21,7 +21,7 @@ elseif isnumeric(S)
         iskels(i) = S(i);
     end
 end
-
+% Normalize data to have a mean of 0 and std of 1
 mn = mean(D(:,4:6));
 sd = std(D(:,4:6));
 D(:,4:6) = D(:,4:6)-repmat(mn,[size(D,1) 1]);
@@ -72,7 +72,7 @@ parfor pairindex = 1:npairs
 %         B = robustfit(ms(:,2:3),ms(:,1));
         [pperp, displ, avgprjdst, sp] = symmetrytest_pairs(ms,B);
         c = matchingcost(P,Q,sp,pperp);
-        
+
 %         SP = reflectedpoints(P,sp,pperp);
 %         s = SP(1:50:size(SP,1),:);
 %         t = Q(1:50:size(Q,1),:);
@@ -87,7 +87,7 @@ parfor pairindex = 1:npairs
 %         xlabel('x'), ylabel('y'), zlabel('z')
 %         title(sprintf('hd: %f, mc: %f', hd, matchingcost(P,Q,sp,pperp)));
 %         pause
-        
+
         if dot(pperp,[1 0 0]) > 0.75 && c < 0.1
             planeparam(pairindex,:) = [pperp displ];
         end
